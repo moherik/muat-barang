@@ -1,0 +1,52 @@
+<div>
+    <div wire:ignore.self class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="formModal" aria-modal="true">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form wire:submit.prevent="save">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$modalTitle}}</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nama Jenis Paket</label>
+                            <input type="text" class="form-control {{$errors->has('title') ? 'border-danger' : ''}}" wire:model.lazy="title">
+                            @error('title')
+                            <span class="text-danger form-text">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <input type="file" class="form-control {{$errors->has('logo') ? 'border-danger' : ''}}" wire:model="logo">
+                            @if ($logo)
+                            <div class="mt-2">
+                                <p class="text-small my-0">Logo Preview:</p>
+                                <img src="{{ $logo->temporaryUrl() }}" class="img rounded img-thumbnail" alt="logo preview" width="50" height="70">
+                            </div>
+                            @endif
+                            @error('logo')
+                            <span class="text-danger form-text">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Warna</label>
+                            <input type="text" class="form-control {{$errors->has('color') ? 'border-danger' : ''}}" wire:model.lazy="color">
+                            @error('color')
+                            <span class="text-danger form-text">{{$message}}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea class="form-control {{$errors->has('desc') ? 'border-danger' : ''}}" wire:model.lazy="desc" cols="5"></textarea>
+                            @error('desc')
+                            <span class="text-danger form-text">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke">
+                        <button type="submit" class="btn btn-primary btn-shadow">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
