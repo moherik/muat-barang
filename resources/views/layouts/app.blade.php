@@ -16,6 +16,8 @@
 </head>
 
 <body>
+    @include('layouts.partials._toastr')
+
     <div id="app">
         <div class="main-wrapper">
             @include('layouts.partials._navbar')

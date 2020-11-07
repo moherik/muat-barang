@@ -3995,6 +3995,31 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+var toastSelector = '.toast';
+$(toastSelector).toast({
+  delay: 5000
+});
+$('.close-toast').on('click', function () {
+  $(toastSelector).toast('hide');
+});
+Livewire.on('showModal', function () {
+  $('.modal').modal('show');
+});
+Livewire.on('closeModal', function () {
+  $('.modal').modal('hide');
+});
+Livewire.on('showToast', function (_ref) {
+  var headerText = _ref.headerText,
+      bodyText = _ref.bodyText;
+  showToast(headerText, bodyText);
+});
+
+function showToast(headerText, bodyText) {
+  $(toastSelector).find('.toast-header-label').text(headerText);
+  $(toastSelector).find('.toast-body').text(bodyText);
+  $(toastSelector).toast('show');
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

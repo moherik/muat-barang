@@ -51,25 +51,25 @@ Jenis Paket
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Logo</th>
+                            <th width="20">#</th>
+                            <th width="50">Logo</th>
                             <th>Judul</th>
-                            <th>Warna</th>
-                            <th></th>
+                            <th width="150">Warna</th>
+                            <th width="100"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($packetTypes as $packetType)
+                        @forelse($packetTypes as $packetType)
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td><img src="{{$packetType->logo}}" class="img" width="32" height="32" /></td>
+                            <td><img src="{{asset('storage/images/packet-type-logo/'.$packetType->logo)}}" class="img" width="48" height="48" /></td>
                             <td>{{$packetType->title}}</td>
-                            <td>{{$packetType->color}}</td>
+                            <td>{{$packetType->color ?? '-'}}</td>
                             <td>
                                 <div class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" aria-expanded="false">Aksi</a>
+                                    <a href="#" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" aria-expanded="false" data-boundary="viewport">Aksi</a>
                                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 27px, 0px);">
-                                        <a href="#" class="dropdown-item has-icon">
+                                        <a href="#" wire:click.prevent="editPacketType({{$packetType->id}})" class="dropdown-item has-icon">
                                             <span class="iconify mr-3" data-icon="mdi:square-edit-outline" data-inline="false" data-width="15" data-height="15"></span>Edit
                                         </a>
                                         <a href="#" wire:click.prevent="deletePacketType({{$packetType->id}})" class="dropdown-item has-icon text-danger">
@@ -79,7 +79,13 @@ Jenis Paket
                                 </div>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                Tidak ada data.
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

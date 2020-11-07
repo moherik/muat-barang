@@ -2,14 +2,14 @@
     <div wire:ignore.self class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="formModal" aria-modal="true">
         <div class="modal-dialog modal-md modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form wire:submit.prevent="save">
+                <form wire:submit.prevent="{{!$editMode ? 'addPacketType' : 'updatePacketType'}}">
                     <div class="modal-header">
                         <h5 class="modal-title">{{$modalTitle}}</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Nama Jenis Paket</label>
-                            <input type="text" class="form-control {{$errors->has('title') ? 'border-danger' : ''}}" wire:model.lazy="title">
+                            <input type="text" class="form-control {{$errors->has('title') ? 'border-danger' : ''}}" wire:model="title">
                             @error('title')
                             <span class="text-danger form-text">{{$message}}</span>
                             @enderror
@@ -17,6 +17,10 @@
                         <div class="form-group">
                             <label>Logo</label>
                             <input type="file" class="form-control {{$errors->has('logo') ? 'border-danger' : ''}}" wire:model="logo">
+                            @if($editMode)
+                            <span class="form-text text-info">
+                                <span class="iconify mr-2" data-icon="mdi:information-outline" data-inline="false"></span>Kosongkan jika tidak ingin mengubah gambar</span>
+                            @endif
                             @if ($logo)
                             <div class="mt-2">
                                 <p class="text-small my-0">Logo Preview:</p>
@@ -29,14 +33,14 @@
                         </div>
                         <div class="form-group">
                             <label>Warna</label>
-                            <input type="text" class="form-control {{$errors->has('color') ? 'border-danger' : ''}}" wire:model.lazy="color">
+                            <input type="text" class="form-control {{$errors->has('color') ? 'border-danger' : ''}}" wire:model="color">
                             @error('color')
                             <span class="text-danger form-text">{{$message}}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label>Deskripsi</label>
-                            <textarea class="form-control {{$errors->has('desc') ? 'border-danger' : ''}}" wire:model.lazy="desc" cols="5"></textarea>
+                            <textarea class="form-control {{$errors->has('desc') ? 'border-danger' : ''}}" wire:model="desc" cols="5"></textarea>
                             @error('desc')
                             <span class="text-danger form-text">{{$message}}</span>
                             @enderror

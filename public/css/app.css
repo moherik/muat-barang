@@ -10909,3 +10909,13 @@ a.text-dark:focus {
   justify-content: center;
 }
 
+.toast {
+  position: fixed;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  right: 0px;
+  z-index: 900;
+  width: 350px;
+  background-color: #fff;
+}
+
