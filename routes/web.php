@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\DeliveryType\DeliveryType;
 use App\Http\Livewire\PacketCategory\PacketCategory;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'verified', 'as' => 'admin.'], function ($route) {
     $route->get('/', Dashboard::class)->name('dashboard');
 
-    $route->get('/packet/category', PacketCategory::class)->name('packet.category');
+    $route->get('/packet-category', PacketCategory::class)->name('packet_category');
+    $route->get('/delivery-type', DeliveryType::class)->name('delivery_type');
 });

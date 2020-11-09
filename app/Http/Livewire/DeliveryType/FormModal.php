@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\PacketCategory;
+namespace App\Http\Livewire\DeliveryType;
 
-use App\Models\PacketCategory;
+use App\Models\DeliveryType;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -10,13 +10,14 @@ class FormModal extends Component
 {
     use WithFileUploads;
 
-    public $addTitle = 'Tambah Kategori';
-    public $editTitle = 'Ubah Kategori';
+    public $addTitle = 'Tambah Jenis Pengiriman';
+    public $editTitle = 'Ubah Jenis Pengiriman';
 
     public $icon = "";
     public $title = "";
     public $desc = "";
     public $color = "";
+    public $tag = "";
 
     public $storeAndNew = false;
     public $editMode = false;
@@ -27,6 +28,7 @@ class FormModal extends Component
         'icon' => 'image|max:500',
         'desc' => 'string',
         'color' => 'string|max:10',
+        'tag' => 'string|max:100',
     ];
 
     protected $listeners = [
@@ -42,7 +44,7 @@ class FormModal extends Component
 
     public function render()
     {
-        return view('livewire.packet-category.form-modal');
+        return view('livewire.delivery-type.form-modal');
     }
 
     /**
@@ -55,15 +57,15 @@ class FormModal extends Component
         $validatedData = $this->validate();
 
         if ($this->icon != "" || $this->icon != null) {
-            $filename = 'packet-category-icon-' . time() . '.png';
-            $path = '/images/packet-category-icon/';
+            $filename = time() . 'delivery-type-icon.png';
+            $path = '/images/delivery-type-icon/';
             $newFilename = createImage($this->icon, $path, $filename);
             $validatedData['icon'] = $newFilename;
         }
 
-        $store = PacketCategory::create($validatedData);
+        $store = DeliveryType::create($validatedData);
         if ($store) {
-            $this->emitTo('packet-category.packet-category', 'resetPage');
+            $this->emitTo('delivery-type.delivery-type', 'resetPage');
             $this->emit('showToast', [
                 'headerText' => 'Info',
                 'bodyText' => 'Berhasil menyimpan data'
@@ -102,8 +104,8 @@ class FormModal extends Component
     {
         $this->editMode = true;
 
-        $record = PacketCategory::where('id', $id)->first();
-        if ($record) {
+        $record = DeliveryType::where('id', $id)->first();
+        if (!$record) {
             $this->emit('showToast', [
                 'headerText' => 'Error',
                 'bodyText' => 'Data tidak ditemukan'
@@ -114,6 +116,7 @@ class FormModal extends Component
         $this->title = $record->title;
         $this->desc = $record->desc;
         $this->color = $record->color;
+        $this->tag = $record->tag;
 
         $this->emit('showModal');
     }
@@ -127,7 +130,7 @@ class FormModal extends Component
     {
         $validatedData = $this->validate();
 
-        $record = PacketCategory::where('id', $this->editId)->first();
+        $record = DeliveryType::where('id', $this->editId)->first();
         if (!$record) {
             $this->emit('showToast', [
                 'headerText' => 'Error',
@@ -135,14 +138,14 @@ class FormModal extends Component
             ]);
         }
 
-        $filename = 'packet-category-icon-' . time() . '.png';
-        $path = '/images/packet-category-icon/';
+        $filename =  time() . '-delivery-type-icon.png';
+        $path = '/images/delivery-type-icon/';
         $newFilename = updateImage($this->icon, $path, $filename, $record->icon);
         $validatedData['icon'] = $newFilename;
 
         $store = $record->update($validatedData);
         if ($store) {
-            $this->emitTo('packet-category.packet-category', 'resetPage');
+            $this->emitTo('delivery-type.delivery-type', 'resetPage');
             $this->emit('showToast', [
                 'headerText' => 'Info',
                 'bodyText' => 'Berhasil mengubah data'
@@ -168,9 +171,11 @@ class FormModal extends Component
         $this->storeAndNew = false;
         $this->editMode = false;
         $this->editId = null;
+
         $this->icon = "";
         $this->title = "";
         $this->desc = "";
         $this->color = "";
+        $this->tag = "";
     }
 }

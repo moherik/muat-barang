@@ -19,14 +19,14 @@
                     <span>Order</span>
                 </a>
             </li>
-            <li class="nav-item {{ activeClass('admin.packet.category') }}">
-                <a href="{{route('admin.packet.category')}}" class="nav-link">
+            <li class="nav-item {{ activeClass('admin.packet_category') }}">
+                <a href="{{route('admin.packet_category')}}" class="nav-link">
                     <span class="menu-icon iconify" data-icon="mdi:cube-outline" data-inline="false" data-width="24" data-height="24"></span>
                     <span>Kategori Paket</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
+            <li class="nav-item {{ activeClass('admin.delivery_type') }}">
+                <a href="{{route('admin.delivery_type')}}" class="nav-link">
                     <span class="menu-icon iconify" data-icon="mdi:truck-delivery-outline" data-inline="false" data-width="24" data-height="24"></span>
                     <span>Jenis Pengiriman</span>
                 </a>

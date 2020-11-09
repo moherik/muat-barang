@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->mediumText('location_detail')->nullable();
             $table->mediumText('packet_desc')->nullable();
             $table->foreignId('packet_category_id')->constrained();
+            $table->string('total_price');
             $table->enum('status', [
                 'PENDING',
                 'DELIVER',

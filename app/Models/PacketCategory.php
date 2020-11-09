@@ -11,13 +11,13 @@ class PacketCategory extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['image_logo'];
+    protected $appends = ['icon_tag'];
 
-    public function getImageLogoAttribute()
+    public function getIconTagAttribute()
     {
-        $logo = $this->attributes['logo'];
-        if ($logo != "" || $logo != null) {
-            return '<img src="' . asset('storage/images/packet-category-logo/' . $logo) . '" class="img" width="32" height="32" />';
+        $icon = $this->attributes['icon'];
+        if ($icon != "" || $icon != null) {
+            return '<img src="' . asset('storage/images/packet-category-icon/' . $icon) . '" class="img" width="32" height="32" />';
         } else {
             return '<span class="iconify" data-icon="mdi:cube-scan" data-inline="false" data-width="32" data-height="32"></span>';
         }

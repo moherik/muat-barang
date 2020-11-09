@@ -50,7 +50,7 @@ Kategori Paket
                 <thead>
                     <tr>
                         <th width="20">#</th>
-                        <th width="50">Logo</th>
+                        <th width="50">Ikon</th>
                         <th>Judul</th>
                         <th>Deskripsi</th>
                         <th width="100"></th>
@@ -60,17 +60,17 @@ Kategori Paket
                     @forelse($packetCategories as $packetCategory)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{!! $packetCategory->image_logo !!}</td>
+                        <td>{!! $packetCategory->icon_tag !!}</td>
                         <td>{{$packetCategory->title}}</td>
                         <td>{{$packetCategory->desc}}</td>
                         <td>
                             <div class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" aria-expanded="false" data-boundary="viewport">Aksi</a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" wire:click.prevent="editPacketCategory({{$packetCategory->id}})" class="dropdown-item has-icon">
+                                    <a href="#" wire:click.prevent="edit({{$packetCategory->id}})" class="dropdown-item has-icon">
                                         <span class="iconify mr-3" data-icon="mdi:square-edit-outline" data-inline="false" data-width="15" data-height="15"></span>Edit
                                     </a>
-                                    <a href="#" wire:click.prevent="deletePacketCategory({{$packetCategory->id}})" class="dropdown-item has-icon text-danger">
+                                    <a href="#" wire:click.prevent="destroy({{$packetCategory->id}})" class="dropdown-item has-icon text-danger">
                                         <span class="iconify mr-3" data-icon="mdi:trash-can-outline" data-inline="false" data-width="15" data-height="15"></span>Hapus
                                     </a>
                                 </div>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Nama Kategori Paket</label>
+                        <label>Nama Jenis Pengiriman</label>
                         <input type="text" class="form-control {{$errors->has('title') ? 'border-danger' : ''}}" wire:model="title">
                         @error('title')
                         <span class="text-danger form-text">{{$message}}</span>
@@ -18,11 +18,9 @@
                         <input type="file" class="form-control {{$errors->has('icon') ? 'border-danger' : ''}}" wire:model="icon">
                         @if($editMode)
                         <span class="form-text text-info">
-                            <span class="iconify mr-2" data-icon="mdi:information-outline" data-inline="false"></span>
-                            Kosongkan jika tidak ingin mengubah ikon
-                        </span>
+                            <span class="iconify mr-2" data-icon="mdi:information-outline" data-inline="false"></span>Kosongkan jika tidak ingin mengubah ikon</span>
                         @endif
-                        @if ($icon)
+                        @if($icon)
                         <div class="mt-2">
                             <p class="text-small my-0">Ikon Preview:</p>
                             <img src="{{ $icon->temporaryUrl() }}" class="img rounded img-thumbnail" alt="ikon preview" width="50" height="70">
@@ -43,6 +41,13 @@
                         <label>Warna</label>
                         <input type="color" class="form-control {{$errors->has('color') ? 'border-danger' : ''}}" wire:model="color">
                         @error('color')
+                        <span class="text-danger form-text">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Tag</label>
+                        <input type="text" class="form-control {{$errors->has('tag') ? 'border-danger' : ''}}" wire:model="tag">
+                        @error('tag')
                         <span class="text-danger form-text">{{$message}}</span>
                         @enderror
                     </div>

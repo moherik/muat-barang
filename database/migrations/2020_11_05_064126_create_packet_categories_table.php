@@ -16,7 +16,7 @@ class CreatePacketCategoriesTable extends Migration
         Schema::create('packet_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('logo')->nullable();
+            $table->string('icon')->nullable();
             $table->string('color')->nullable();
             $table->mediumText('desc')->nullable();
             $table->timestamps();

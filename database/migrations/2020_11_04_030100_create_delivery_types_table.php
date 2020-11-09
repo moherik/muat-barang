@@ -16,7 +16,7 @@ class CreateDeliveryTypesTable extends Migration
         Schema::create('delivery_types', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('logo')->nullable();
+            $table->string('icon')->nullable();
             $table->string('color')->nullable();
             $table->mediumText('desc')->nullable();
             $table->string('tag')->nullable();
