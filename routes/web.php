@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Livewire\PacketType\PacketTypeComponent;
+use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\PacketCategory\PacketCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'verified', 'as' => 'admin.'], function ($route) {
-    $route->get('/', function () {
-        return view('admin.index');
-    })->name('dashboard');
+    $route->get('/', Dashboard::class)->name('dashboard');
 
-    $route->get('/packet/type', PacketTypeComponent::class)->name('packet.type');
+    $route->get('/packet/category', PacketCategory::class)->name('packet.category');
 });

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\PacketType;
+namespace App\Http\Livewire\PacketCategory;
 
-use App\Models\PacketType;
+use App\Models\PacketCategory as Model;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class PacketTypeComponent extends Component
+class PacketCategory extends Component
 {
     use WithPagination;
 
@@ -17,6 +17,8 @@ class PacketTypeComponent extends Component
 
     protected $listeners = [
         'reloadData' => 'resetPage',
+        'resetSearch',
+        'search',
     ];
 
     public function mount()
@@ -27,11 +29,16 @@ class PacketTypeComponent extends Component
 
     public function render()
     {
-        return view('livewire.packet-type.index', [
-            'packetTypes' => PacketType::where('title', 'like', '%' . $this->searchText . '%')->orderBy('created_at', 'desc')->paginate(10)
+        return view('livewire.packet-category.index', [
+            'packetCategories' => Model::where('title', 'like', '%' . $this->searchText . '%')->orderBy('created_at', 'desc')->paginate(10)
         ])
             ->extends('layouts.app')
             ->section('content:body');
+    }
+
+    public function search($text)
+    {
+        $this->searchText = $text;
     }
 
     public function resetSearch()
@@ -40,17 +47,17 @@ class PacketTypeComponent extends Component
         $this->resetPage();
     }
 
-    public function editPacketType($id)
+    public function editPacketCategory($id)
     {
-        $this->emitTo('packet-type.form-modal', 'showEditModal', ['packetTypeId' => $id]);
+        $this->emitTo('packet-category.form-modal', 'showEditModal', ['packetCategoryId' => $id]);
     }
 
-    public function deletePacketType($id)
+    public function deletePacketCategory($id)
     {
-        $record = PacketType::where('id', $id)->first();
+        $record = Model::where('id', $id)->first();
         if ($record->delete()) {
             if ($record->logo)
-                Storage::disk('public')->delete('images/packet-type-logo/' . $record->logo);
+                Storage::disk('public')->delete('images/packet-category-logo/' . $record->logo);
 
             $this->emit('showToast', [
                 'headerText' => 'Info',

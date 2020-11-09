@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\PacketType;
+namespace App\Http\Livewire\PacketCategory;
 
-use App\Models\PacketType;
+use App\Models\PacketCategory;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,88 +11,95 @@ class FormModal extends Component
 {
     use WithFileUploads;
 
-    public $modalTitle, $logo, $title, $color, $desc;
+    public $modalTitle, $logo, $title, $desc;
 
+    public $saveAndNew = false;
     public $editMode = false;
-    public $editPacketTypeId = null;
+    public $editPacketCategoryId = null;
 
-    public $createRules = [
-        'logo' => 'required|image|max:1024',
-        'title' => 'required|string|min:5',
-        'color' => 'string',
-        'desc' => 'string',
-    ];
-
-    public $updateRules = [
-        'logo' => 'image|max:1024',
-        'title' => 'required|string|min:5',
-        'color' => 'string',
+    protected $rules = [
+        'title' => 'required|string',
+        'logo' => 'image|max:500',
         'desc' => 'string',
     ];
 
     protected $listeners = [
         'showEditModal' => 'editMode',
-        'updatePacketType' => 'updatePacketType'
+        'updatePacketCategory' => 'updatePacketCategory',
+        'resetPropValue' => 'resetPropValue'
     ];
 
     public function mount()
     {
-        $this->modalTitle = 'Create';
+        $this->modalTitle = 'Tambah Kategori';
         $this->resetPropValue();
     }
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName, $this->createRules);
-    }
-
-    public function updatedEditMode($propertyName)
-    {
-        $this->validateOnly($propertyName, $this->updateRules);
+        $this->validateOnly($propertyName);
     }
 
     public function render()
     {
-        return view('livewire.packet-type.form-modal');
+        return view('livewire.packet-category.form-modal');
     }
 
     /**
-     * Save new packet type
+     * Save new packet category
+     * 
+     * @return void
      */
-    public function addPacketType()
+    public function addPacketCategory()
     {
-        $validatedData = $this->validate($this->createRules);
+        $validatedData = $this->validate();
 
-        $filename = $this->uploadImage($this->logo, 'images/packet-type-logo');
-        $validatedData['logo'] = $filename;
+        if ($this->logo != "" || $this->logo != null) {
+            $filename = 'packet-category-logo-' . time() . '.png';
+            $newFilename = $this->uploadImage($this->logo, 'images/packet-category-logo', $filename);
+            $validatedData['logo'] = $newFilename;
+        }
 
-        $store = PacketType::create($validatedData);
+        $store = PacketCategory::create($validatedData);
         if ($store) {
-            $this->emitTo('packet-type.packet-type-component', 'reloadData');
+            $this->emitTo('packet-category.packet-category', 'reloadData');
             $this->emit('showToast', [
                 'headerText' => 'Info',
                 'bodyText' => 'Berhasil menyimpan data'
             ]);
         }
 
-        $this->emit('closeModal');
+        if (!$this->saveAndNew)
+            $this->emit('closeModal');
+
         $this->resetPropValue();
     }
 
     /**
-     * Show modal in edit mode
-     * @param int $packetTypeId
+     * Save packet category and reset properties without close modal
      * 
      * @return void
      */
-    public function editMode($packetTypeId)
+    public function saveAndNew()
+    {
+        $this->saveAndNew = true;
+        $this->addPacketCategory();
+    }
+
+    /**
+     * Show modal in edit mode
+     * @param int $PacketCategoryId
+     * 
+     * @return void
+     */
+    public function editMode($packetCategoryId)
     {
         $this->editMode = true;
-        $this->modalTitle = 'Edit';
+        $this->modalTitle = 'Ubah Kategori';
 
-        $record = PacketType::where('id', $packetTypeId)->first();
+        $record = PacketCategory::where('id', $packetCategoryId)->first();
         if ($record) {
-            $this->editPacketTypeId = $record->id;
+            $this->editPacketCategoryId = $record->id;
             $this->title = $record->title;
             $this->color = $record->color;
             $this->desc = $record->desc;
@@ -106,18 +113,18 @@ class FormModal extends Component
      * 
      * @return void
      */
-    public function updatePacketType()
+    public function updatePacketCategory()
     {
-        $validatedData = $this->validate($this->updateRules);
+        $validatedData = $this->validate();
 
-        $record = PacketType::where('id', $this->editPacketTypeId)->first();
+        $record = PacketCategory::where('id', $this->editPacketCategoryId)->first();
         if ($record) {
             $newFilename = $this->updateLogo($this->logo, $record->logo);
             $validatedData['logo'] = $newFilename;
 
             $store = $record->update($validatedData);
             if ($store) {
-                $this->emitTo('packet-type.packet-type-component', 'reloadData');
+                $this->emitTo('packet-category.packet-category', 'reloadData');
                 $this->emit('showToast', [
                     'headerText' => 'Info',
                     'bodyText' => 'Berhasil mengubah data'
@@ -139,11 +146,12 @@ class FormModal extends Component
     public function updateLogo($newImageData, $oldFilename)
     {
         if ($newImageData != null || $newImageData != "") {
-            $filename = $this->uploadImage($newImageData, 'images/packet-type-logo');
+            $filename = 'packet-category-logo-' . time() . '.png';
+            $newFilename = $this->uploadImage($newImageData, 'images/packet-category-logo', $filename);
 
-            if ($filename != null) {
-                Storage::disk('public')->delete('images/packet-type-logo/' . $oldFilename);
-                return $filename;
+            if ($newFilename != null) {
+                Storage::disk('public')->delete('images/packet-category-logo/' . $oldFilename);
+                return $newFilename;
             } else {
                 return $oldFilename;
             }
@@ -160,9 +168,8 @@ class FormModal extends Component
      * @return string $filename
      * @return null
      */
-    public function uploadImage($imageData, $path)
+    public function uploadImage($imageData, $path, $filename)
     {
-        $filename = 'packet-type-logo-' . time() . '.png';
         $upload = $imageData->storeAs($path, $filename, 'public');
         if ($upload) {
             return $filename;
@@ -178,11 +185,11 @@ class FormModal extends Component
      */
     public function resetPropValue()
     {
+        $this->saveAndNew = false;
         $this->editMode = false;
-        $this->editPacketTypeId = null;
+        $this->editPacketCategoryId = null;
         $this->logo = '';
         $this->title = '';
-        $this->color = '';
         $this->desc = '';
     }
 }

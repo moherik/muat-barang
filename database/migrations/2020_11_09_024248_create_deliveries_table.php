@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePacketTypesTable extends Migration
+class CreateDeliveriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePacketTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('packet_types', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('logo');
-            $table->string('color')->nullable();
-            $table->mediumText('desc')->nullable();
+            $table->string('receiver_name');
+            $table->string('receiver_phone');
+            $table->string('location_latlong');
+            $table->mediumText('location_detail')->nullable();
+            $table->mediumText('delivery_desc')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreatePacketTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('packet_types');
+        Schema::dropIfExists('deliveries');
     }
 }

@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            PacketTypeSeeder::class,
+            // PacketCategorySeeder::class,
+            UserAdminSeeder::class,
+            DeliveryTypeSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
     }

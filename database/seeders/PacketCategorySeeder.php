@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PacketType;
+use App\Models\PacketCategory;
 use Illuminate\Database\Seeder;
 
-class PacketTypeSeeder extends Seeder
+class PacketCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class PacketTypeSeeder extends Seeder
      */
     public function run()
     {
-        PacketType::factory()->times(100)->create();
+        PacketCategory::factory()->times(100)->create();
     }
 }

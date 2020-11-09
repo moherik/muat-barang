@@ -3993,20 +3993,23 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Modal function
 
-var toastSelector = '.toast';
-$(toastSelector).toast({
-  delay: 5000
-});
-$('.close-toast').on('click', function () {
-  $(toastSelector).toast('hide');
-});
+
+var modalSelector = $('.modal');
 Livewire.on('showModal', function () {
-  $('.modal').modal('show');
+  modalSelector.modal('show');
 });
 Livewire.on('closeModal', function () {
-  $('.modal').modal('hide');
+  modalSelector.modal('hide');
+});
+modalSelector.on('hide.bs.modal', function () {
+  Livewire.emit('resetPropValue');
+}); // Toast function
+
+var toastSelector = $('.toast');
+toastSelector.toast({
+  delay: 5000
 });
 Livewire.on('showToast', function (_ref) {
   var headerText = _ref.headerText,
@@ -4015,10 +4018,14 @@ Livewire.on('showToast', function (_ref) {
 });
 
 function showToast(headerText, bodyText) {
-  $(toastSelector).find('.toast-header-label').text(headerText);
-  $(toastSelector).find('.toast-body').text(bodyText);
-  $(toastSelector).toast('show');
+  toastSelector.find('.toast-header-label').text(headerText);
+  toastSelector.find('.toast-body').text(bodyText);
+  toastSelector.toast('show');
 }
+
+$('.close-toast').on('click', function () {
+  toastSelector.toast('hide');
+});
 
 /***/ }),
 

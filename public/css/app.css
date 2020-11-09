@@ -10910,11 +10910,12 @@ a.text-dark:focus {
 }
 
 .toast {
+  display: none;
   position: fixed;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
   right: 0px;
-  z-index: 900;
+  z-index: 1100;
   width: 350px;
   background-color: #fff;
 }
