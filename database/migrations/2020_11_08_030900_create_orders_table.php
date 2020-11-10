@@ -15,20 +15,21 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('sender_name');
             $table->string('sender_phone');
             $table->string('packet_image')->nullable();
             $table->string('location_latlong');
             $table->mediumText('location_detail')->nullable();
             $table->mediumText('packet_desc')->nullable();
-            $table->foreignId('packet_category_id')->constrained();
+            $table->foreignId('packet_category_id')->constrained('packet_categories');
             $table->string('total_price');
             $table->enum('status', [
                 'PENDING',
                 'DELIVER',
                 'DELIVERED',
             ])->default('PENDING');
-            $table->foreignId('delivery_type_id')->constrained();
+            $table->foreignId('delivery_type_id')->constrained('delivery_types');
             $table->timestamps();
         });
     }
@@ -40,11 +41,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('orders_delivery_type_id_foreign');
-            $table->dropForeign('orders_packet_category_id_foreign');
-        });
-
         Schema::dropIfExists('orders');
     }
 }

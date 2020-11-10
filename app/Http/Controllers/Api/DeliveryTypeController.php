@@ -13,7 +13,7 @@ class DeliveryTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function __invoke()
     {
         $record = DeliveryType::where('is_active', '>', 0)->orderBy('created_at', 'desc')->get();
         return DeliveryTypeResource::collection($record);

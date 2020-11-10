@@ -19,11 +19,13 @@ class DeliveryTypeSeeder extends Seeder
             [
                 'title' => 'Motor',
                 'desc' => 'Pengiriman menggunakan motor oleh kurir',
+                'is_active' => 0,
                 'created_at' => Carbon::now(),
             ],
             [
                 'title' => 'Mobil',
                 'desc' => 'Pengiriman menggunakan mobil oleh kurir',
+                'is_active' => 0,
                 'created_at' => Carbon::now(),
             ],
         ]);

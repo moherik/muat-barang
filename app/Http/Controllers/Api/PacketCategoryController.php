@@ -13,7 +13,7 @@ class PacketCategoryController extends Controller
      *
      * @return PacketCategoryResource
      */
-    public function index()
+    public function __invoke()
     {
         $record = PacketCategory::where('is_active', '>', 0)->orderBy('created_at', 'desc')->get();
         return PacketCategoryResource::collection($record);

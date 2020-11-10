@@ -15,11 +15,13 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained('orders');
             $table->string('receiver_name');
             $table->string('receiver_phone');
             $table->string('location_latlong');
             $table->mediumText('location_detail')->nullable();
             $table->mediumText('delivery_desc')->nullable();
+            $table->unsignedInteger('sort_order');
             $table->timestamps();
         });
     }
