@@ -35,3 +35,9 @@ function showToast(headerText, bodyText) {
 $('.close-toast').on('click', function() {
     toastSelector.toast('hide')
 })
+
+// trigger logout form
+$('#logoutHref').on('click', function(e) {
+    e.preventDefault();
+    $('#logoutForm').submit();
+})

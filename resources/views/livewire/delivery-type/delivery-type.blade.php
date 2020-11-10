@@ -54,6 +54,7 @@ Jenis Pengiriman
                         <th>Judul</th>
                         <th>Deskripsi</th>
                         <th>Tag</th>
+                        <th width="100">Aktif</th>
                         <th width="100"></th>
                     </tr>
                 </thead>
@@ -61,12 +62,11 @@ Jenis Pengiriman
                     @forelse($deliveryTypes as $deliveryType)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{!! $deliveryType->icon_tag !!}</td>
+                        <td>{!!$deliveryType->icon_tag!!}</td>
                         <td>{{$deliveryType->title}}</td>
                         <td>{{$deliveryType->desc}}</td>
-                        <td>
-                            <span class="badge badge-primary">{{$deliveryType->tag}}</span>
-                        </td>
+                        <td><span class="badge badge-primary">{{$deliveryType->tag}}</span></td>
+                        <td>{!!$deliveryType->active_badge!!}</td>
                         <td>
                             <div class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" aria-expanded="false" data-boundary="viewport">Aksi</a>
@@ -83,7 +83,7 @@ Jenis Pengiriman
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center">
+                        <td colspan="7" class="text-center">
                             Tidak ada data.
                         </td>
                     </tr>

@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'verified', 'as' => 'admin.'], function ($route) {
+Route::group(['middleware' => 'verified'], function ($route) {
+    $route->get('/', function () {
+        return view('home');
+    });
+});
+
+Route::group(['middleware' => ['verified', 'role:admin'], 'as' => 'admin.', 'prefix' => 'dashboard'], function ($route) {
     $route->get('/', Dashboard::class)->name('dashboard');
 
     $route->get('/packet-category', PacketCategory::class)->name('packet_category');

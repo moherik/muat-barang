@@ -15,7 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // PacketCategorySeeder::class,
-            UserAdminSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
+            PacketCategorySeeder::class,
             DeliveryTypeSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

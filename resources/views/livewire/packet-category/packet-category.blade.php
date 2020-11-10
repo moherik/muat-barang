@@ -53,6 +53,7 @@ Kategori Paket
                         <th width="50">Ikon</th>
                         <th>Judul</th>
                         <th>Deskripsi</th>
+                        <th width="100">Aktif</th>
                         <th width="100"></th>
                     </tr>
                 </thead>
@@ -60,9 +61,10 @@ Kategori Paket
                     @forelse($packetCategories as $packetCategory)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{!! $packetCategory->icon_tag !!}</td>
+                        <td>{!!$packetCategory->icon_tag!!}</td>
                         <td>{{$packetCategory->title}}</td>
                         <td>{{$packetCategory->desc}}</td>
+                        <td>{!!$packetCategory->active_badge!!}</td>
                         <td>
                             <div class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" aria-expanded="false" data-boundary="viewport">Aksi</a>
@@ -79,7 +81,7 @@ Kategori Paket
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center">
+                        <td colspan="6" class="text-center">
                             Tidak ada data.
                         </td>
                     </tr>

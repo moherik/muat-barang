@@ -18,6 +18,7 @@ class FormModal extends Component
     public $desc = "";
     public $color = "";
     public $tag = "";
+    public $is_active = 0;
 
     public $storeAndNew = false;
     public $editMode = false;
@@ -29,6 +30,7 @@ class FormModal extends Component
         'desc' => 'string',
         'color' => 'string|max:10',
         'tag' => 'string|max:100',
+        'is_active' => '',
     ];
 
     protected $listeners = [
@@ -117,6 +119,7 @@ class FormModal extends Component
         $this->desc = $record->desc;
         $this->color = $record->color;
         $this->tag = $record->tag;
+        $this->is_active = $record->is_active;
 
         $this->emit('showModal');
     }
@@ -177,5 +180,6 @@ class FormModal extends Component
         $this->desc = "";
         $this->color = "";
         $this->tag = "";
+        $this->is_active = 0;
     }
 }

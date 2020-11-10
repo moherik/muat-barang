@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DeliveryTypeController;
+use App\Http\Controllers\Api\PacketCategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum'], function ($route) {
+    $route->get('/user', [AuthController::class, 'user']);
+
+    $route->get('/packet-category', [PacketCategoryController::class, 'index']);
+    $route->get('/delivery-type', [DeliveryTypeController::class, 'index']);
+});
+
+Route::group(['prefix' => 'auth'], function ($route) {
+    $route->post('/login', [AuthController::class, 'login']);
+    $route->post('/phone', [AuthController::class, 'phone']);
 });

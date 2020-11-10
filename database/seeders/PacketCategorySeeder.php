@@ -14,6 +14,10 @@ class PacketCategorySeeder extends Seeder
      */
     public function run()
     {
-        PacketCategory::factory()->times(100)->create();
+        // PacketCategory::factory()->times(100)->create();
+        PacketCategory::create([
+            'title' => 'Makanan & Minuman',
+            'desc' => 'pengiriman kategori makanan dan minuman'
+        ]);
     }
 }

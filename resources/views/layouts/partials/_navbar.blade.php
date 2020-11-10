@@ -80,10 +80,12 @@
                     <i class="fas fa-cog"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="/logout" class="dropdown-item has-icon text-danger">
+                <a href="#" id="logoutHref" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
         </li>
     </ul>
 </nav>
+
+<form id="logoutForm" action="/logout" method="POST">@csrf</form>

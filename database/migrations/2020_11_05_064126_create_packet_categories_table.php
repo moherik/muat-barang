@@ -19,6 +19,7 @@ class CreatePacketCategoriesTable extends Migration
             $table->string('icon')->nullable();
             $table->string('color')->nullable();
             $table->mediumText('desc')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }

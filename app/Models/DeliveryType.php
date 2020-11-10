@@ -21,6 +21,15 @@ class DeliveryType extends Model
         }
     }
 
+    public function getActiveBadgeAttribute()
+    {
+        if ($this->attributes['is_active']) {
+            return '<span class="badge badge-primary">Aktif</span>';
+        } else {
+            return '<span class="badge badge-secondary">Non-Aktif</span>';
+        }
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);

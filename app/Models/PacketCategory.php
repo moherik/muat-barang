@@ -11,8 +11,6 @@ class PacketCategory extends Model
 
     protected $guarded = [];
 
-    protected $appends = ['icon_tag'];
-
     public function getIconTagAttribute()
     {
         $icon = $this->attributes['icon'];
@@ -20,6 +18,15 @@ class PacketCategory extends Model
             return '<img src="' . asset('storage/images/packet-category-icon/' . $icon) . '" class="img" width="32" height="32" />';
         } else {
             return '<span class="iconify" data-icon="mdi:cube-scan" data-inline="false" data-width="32" data-height="32"></span>';
+        }
+    }
+
+    public function getActiveBadgeAttribute()
+    {
+        if ($this->attributes['is_active']) {
+            return '<span class="badge badge-primary">Aktif</span>';
+        } else {
+            return '<span class="badge badge-secondary">Non-Aktif</span>';
         }
     }
 

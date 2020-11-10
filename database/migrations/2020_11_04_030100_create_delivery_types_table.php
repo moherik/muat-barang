@@ -20,6 +20,7 @@ class CreateDeliveryTypesTable extends Migration
             $table->string('color')->nullable();
             $table->mediumText('desc')->nullable();
             $table->string('tag')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }

@@ -48,6 +48,16 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke">
+                    <div class="mr-auto">
+                        <label class="custom-switch p-0">
+                            <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" wire:model="is_active">
+                            <span class="custom-switch-indicator"></span>
+                            <span class="custom-switch-description">Aktif?</span>
+                        </label>
+                        @error('is_active')
+                        <span class="text-danger form-text">{{$message}}</span>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-primary btn-shadow">Simpan</button>
                     @if(!$editMode)
                     <button type="button" wire:click.prevent="storeAndNew" class="btn btn-primary btn-shadow">Simpan & Buat Baru</button>

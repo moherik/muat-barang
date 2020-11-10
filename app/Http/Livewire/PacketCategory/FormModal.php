@@ -17,6 +17,7 @@ class FormModal extends Component
     public $title = "";
     public $desc = "";
     public $color = "";
+    public $is_active = 0;
 
     public $storeAndNew = false;
     public $editMode = false;
@@ -27,6 +28,7 @@ class FormModal extends Component
         'icon' => 'image|max:500',
         'desc' => 'string',
         'color' => 'string|max:10',
+        'is_active' => '',
     ];
 
     protected $listeners = [
@@ -103,8 +105,8 @@ class FormModal extends Component
         $this->editMode = true;
 
         $record = PacketCategory::where('id', $id)->first();
-        if ($record) {
-            $this->emit('showToast', [
+        if (!$record) {
+            return $this->emit('showToast', [
                 'headerText' => 'Error',
                 'bodyText' => 'Data tidak ditemukan'
             ]);
@@ -114,6 +116,7 @@ class FormModal extends Component
         $this->title = $record->title;
         $this->desc = $record->desc;
         $this->color = $record->color;
+        $this->is_active = $record->is_active;
 
         $this->emit('showModal');
     }
@@ -172,5 +175,6 @@ class FormModal extends Component
         $this->title = "";
         $this->desc = "";
         $this->color = "";
+        $this->is_active = 0;
     }
 }
